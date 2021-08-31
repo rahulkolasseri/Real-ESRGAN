@@ -13,18 +13,18 @@ ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 class RealESRGANer():
 
-    def __init__(self, scale, model_path, model=None, tile=0, tile_pad=10, pre_pad=10, half=False):
+    def __init__(self, scale, model_path, tile=0, tile_pad=10, pre_pad=10, half=False, devicex='cuda'):
         self.scale = scale
         self.tile_size = tile
         self.tile_pad = tile_pad
         self.pre_pad = pre_pad
         self.mod_scale = None
         self.half = half
+        self.devicex = devicex
 
         # initialize model
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        if model is None:
-            model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=scale)
+        self.device = torch.device(self.devicex)#('cuda' if torch.cuda.is_available() else 'cpu')
+        model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=scale)
 
         if model_path.startswith('https://'):
             model_path = load_file_from_url(

@@ -1,6 +1,5 @@
 # ignored folders
 datasets/*
-results/*
 tb_logger/*
 wandb/*
 tmp/*
